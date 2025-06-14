@@ -22,7 +22,7 @@
 let SERVER_M_order = "https://starmark.work/OrderOnline_API_Order_test/";
 let SERVER_M_ax = "https://starmark.work/OrderOnline_API_AIF_test/";
 
-// let SERVER_M_order = 'http://localhost:54871/'
+//let SERVER_M_order = 'http://localhost:54871/'
 //let SERVER_M_ax = 'http://localhost:4377/';
 
 let API_LOAD = SERVER_M_order + "api/order/load";

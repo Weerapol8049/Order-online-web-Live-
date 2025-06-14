@@ -10,12 +10,13 @@
 // let API_LOAD_LINE = SERVER_L + 'api/OrderOnline/line/load';
 // let API_DELETE_LINE = SERVER_L + "api/OrderOnline/line/delete";
 
-let SERVER_L_order = "https://starmark.work/OrderOnline_API_Order_test/"; //Live
+//let SERVER_L_order = "https://starmark.work/OrderOnline_API_Order_test/"; //Live
 let SERVER_L_ax = "https://starmark.work/OrderOnline_API_AIF_test/"; //Live
 
 // let SERVER_L_order = 'http://starmark.work/OrderOnline_API_Order_test/';//Live
 // let SERVER_L_ax = 'http://starmark.work/OrderOnline_API_AIF_test/';//Live
 // let SERVER_L_ax = 'http://localhost:4377/';
+let SERVER_L_order = "http://localhost:54871/";
 
 let API_LOAD_LINE = SERVER_L_order + "api/line/load";
 let API_DELETE_LINE = SERVER_L_ax + "api/line/delete";
@@ -101,7 +102,7 @@ function load() {
                                   
                                     <td>
                                     <button type="button" class="btn btn-block btn-outline-success btn-xs" 
-                                        onclick="clickLineEdit('${row.Date.toLocaleString("en-US")}','${row.ConfirmDate.toLocaleString("en-US")}','${row.Series}','${row.Model}','${row.Sink}','${row.Top}','${row.Qty}','${row.Amount}','${row.RecId}','${row.ItemId}','${row.ItemName}','${row.Size}','${row.BookingId}','${row.TimePeriod}')">Edit</button>
+                                        onclick="clickLineEdit('${row.Date.toLocaleString("en-US")}','${row.ConfirmDate.toLocaleString("en-US")}','${row.Series}','${row.Model}','${row.Sink}','${row.Top}','${row.Qty}','${row.Amount}','${row.RecId}','${row.ItemId}','${row.ItemName}','${row.Size}','${row.BookingId}','${row.TimePeriod}','${row.NoReserve}')">Edit</button>
                                         <button type="button" class="btn btn-block btn-outline-danger btn-xs" onclick="clickLineDelete('${row.RecId}','${row.BookingId}','${row.Qty}')">Delete</button>
                                     </td>
                                 </tr>
@@ -274,7 +275,8 @@ function clickLineEdit(
   itemName,
   size,
   bookingId,
-  timePeriod
+  timePeriod,
+  NoReserve
 ) {
   // setItem("action_line", action);
   setItem("series_val", series);
@@ -291,6 +293,7 @@ function clickLineEdit(
   setItem("size_val", size);
   setItem("bookId_val", bookingId);
   setItem("timePeriod_val", timePeriod);
+  setItem("noReserve_val", NoReserve);
 
   window.location = "LineEditPage.html";
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +11,13 @@
     <link rel="stylesheet" href="../css/fonts.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Theme style -->
     <link rel="stylesheet" href="../css/adminlte.min.css">
     <!-- Select2 -->
-  <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.24/dist/sweetalert2.all.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -26,29 +27,31 @@
 
     <style>
       .input-icons i {
-          position: absolute;
+        position: absolute;
       }
-        
+
       .input-icons {
-          width: 100%;
-          margin-bottom: 10px;
+        width: 100%;
+        margin-bottom: 10px;
       }
-        
+
       .icon {
-          padding: 10px;
-          min-width: 40px;
+        padding: 10px;
+        min-width: 40px;
       }
-        
+
       .input-field {
-          width: 100%;
-          padding: 10px;
-          text-align: center;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
       }
-  </style>
-</head>
-<body style="margin-left: 20px;">
+
+    </style>
+  </head>
+
+  <body style="margin-left: 20px;">
     <!-- Site wrapper -->
-    <div >
+    <div>
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -70,7 +73,7 @@
             </div>
           </div><!-- /.container-fluid -->
         </section>
-    
+
         <!-- Main content -->
         <section class="content">
           <div class="row">
@@ -78,7 +81,7 @@
               <div class="card card-primary">
                 <div class="card-header">
                   <h3 class="card-title">Order line</h3>
-    
+
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                       <i class="fas fa-minus"></i>
@@ -86,7 +89,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                 
+
                   <input type="number" id="line_recId" class="form-control" style="display: none;">
 
                   <div class="row">
@@ -96,8 +99,8 @@
                         <div class="input-icons">
                           <i class="fa fa-calendar icon"></i>
                           <input type="date" id="salesDate_line" class="form-control"
-                          style="background-color: white; padding-left: 30px;" 
-                          onchange="setMinConfirmDate(this.value, 0);">
+                            style="background-color: white; padding-left: 30px;"
+                            onchange="setMinConfirmDate(this.value, 0);">
                         </div>
                       </div>
                     </div>
@@ -106,16 +109,16 @@
                         <label for="confirmDate_line0">วันที่ติดตั้ง</label>
                         <div class="input-icons">
                           <i class="fa fa-calendar icon"></i>
-                          <input type="date" id="confirmDate_line0" class="form-control" 
-                          style="background-color: white; padding-left: 30px;" 
-                          onchange="confDateChange(this.value, 0)">
+                          <input type="date" id="confirmDate_line0" class="form-control"
+                            style="background-color: white; padding-left: 30px;"
+                            onchange="confDateChange(this.value, 0)">
                         </div>
                       </div>
                     </div>
                     <div class="col-sm-2">
                       <div class="form-group" id="groupTimePeriod">
                         <label for="timeperiod">ช่วงเวลา</label>
-                        <select id="timeperiod" class="form-control select2bs4"  style="width: 100%;" >
+                        <select id="timeperiod" class="form-control select2bs4" style="width: 100%;">
                           <!-- <option value="0" selected >----- None -----</option>
                           <option value="1">เช้า</option>
                           <option value="2">บ่าย</option> -->
@@ -134,14 +137,15 @@
                     <div class="col-sm-4">
                       <div class="form-group">
                         <label for="series">Series <b style="color: red;">*</b></label>
-                        <select id="series" class="form-control select2bs4"  style="width: 100%;" onchange="loadModel('', '',this.value)">
+                        <select id="series" class="form-control select2bs4" style="width: 100%;"
+                          onchange="loadModel('', '',this.value)">
                         </select>
                       </div>
                     </div>
                     <div class="col-sm-5">
                       <div class="form-group">
                         <label for="model">Model <b style="color: red;">*</b></label>
-                        <select id="model" class="form-control select2bs4" style="width: 100%;" 
+                        <select id="model" class="form-control select2bs4" style="width: 100%;"
                           onchange="loadItem(item, sessionStorage.getItem('pool_line_val'), document.getElementById('series').value, this.value);">
                         </select>
 
@@ -150,14 +154,14 @@
                       </div>
                     </div>
                     <div class="col-sm-3">
-                      <div class="form-group" >
+                      <div class="form-group">
                         <label for="size0">Size</label>
                         <select id="size0" class="form-control select2bs4" style="width: 100%;">
-                          <option value="" selected >----- None -----</option>
+                          <option value="" selected>----- None -----</option>
                           <option value="S">S</option>
                           <option value="M">M</option>
                           <option value="L">L</option>
-  
+
                         </select>
                       </div>
                     </div>
@@ -178,15 +182,16 @@
                       </div>
                     </div>
                   </div>
-                
+
                   <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-5">
                       <div class="form-group">
                         <label for="multiqty0">จำนวน</label>
-                        <input type="number" id="multiqty0" class="form-control" min="0" oninput="this.value = Math.abs(this.value)">
+                        <input type="number" id="multiqty0" class="form-control" min="0"
+                          oninput="this.value = Math.abs(this.value)">
                       </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-5">
                       <div class="form-group">
                         <label for="multiamount0">ยอดเงินรวม</label>
                         <input type="number" id="multiamount0" class="form-control" min="0" step=".01" value="0.00"
@@ -194,8 +199,14 @@
                           oninput="this.value = Math.abs(this.value)">
                       </div>
                     </div>
+                    <div class="col-xs-1">
+                      <label for="checkReserve0">ไม่จอง</label>
+                      <div class="form-group" style="padding-left: 15px;">
+                        <input type="checkbox" id="checkReserve0" class="form-group" onclick="">
+                      </div>
+                    </div>
                   </div>
-                  
+
                 </div>
                 <!-- /.card-body -->
 
@@ -210,15 +221,15 @@
               </div>
               <!-- /.card -->
             </div>
-           
+
           </div>
-         
+
         </section>
         <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
-    
-    
+
+
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
@@ -239,19 +250,21 @@
     <!-- Select2 -->
     <script src="../plugins/select2/js/select2.full.min.js"></script>
     <script>
-      $(function() {
+      $(function ()
+      {
         $('.select2bs4').select2({
           theme: 'bootstrap4'
         })
 
       })
     </script>
-    </body>
-    <footer class="main-footer" style="margin-left: 0;">
-      <div class="float-right d-none d-lg-block">
-          <b>Version</b> 3.2.0
-      </div>
-      <!-- <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+  </body>
+  <footer class="main-footer" style="margin-left: 0;">
+    <div class="float-right d-none d-lg-block">
+      <b>Version</b> 3.2.0
+    </div>
+    <!-- <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
       reserved. -->
   </footer>
+
 </html>

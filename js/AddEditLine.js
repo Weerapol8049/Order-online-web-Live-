@@ -7,6 +7,7 @@ let size = getItem("size_val");
 let refRecId = getItem("recId_val");
 let bookId = getItem("bookId_val");
 let confirmDate = getItem("confirmdate_val");
+let noReserve = getItem("noReserve_val");
 let username = localStorage.getItem("username_val");
 let timePeriod = sessionStorage.getItem("timePeriod_val");
 let title = document.getElementsByTagName("title")[0].innerText;
@@ -38,9 +39,9 @@ let title = document.getElementsByTagName("title")[0].innerText;
 //let SERVER_order = "https://starmark.work/OrderOnline_API_Orders/"; //Live
 //let SERVER_ax = "https://starmark.work/OrderOnline_API_AIF/"; //Live
 
- let SERVER_order = 'https://starmark.work/OrderOnline_API_Order_test/';
- let SERVER_ax = 'https://starmark.work/OrderOnline_API_AIF_test/';
- //let SERVER_ax = 'http://localhost:4377/';
+let SERVER_order = "https://starmark.work/OrderOnline_API_Order_test/";
+//let SERVER_ax = 'https://starmark.work/OrderOnline_API_AIF_test/';
+let SERVER_ax = "http://localhost:4377/";
 
 let API_SERIES = SERVER_order + "api/line/series";
 let API_MODEL = SERVER_order + "api/line/model";
@@ -94,6 +95,8 @@ if (title == "Add Line") {
   //itemName_line_val
   setValue("ItemId0", getItem("itemId_line_val"));
   setValue("ItemName0", getItem("itemName_line_val"));
+
+  document.getElementById("checkReserve0").checked = noReserve;//ไม่จอง
 
   if (confirmDate == "") {
     document.getElementById("timeperiod").disabled = true;
@@ -201,49 +204,49 @@ function createGroupSeries() {
   groupseq.appendChild(seq2);
 
   //#region series
-    let colseries = createElement("div", {
-      id: "colseries" + seq,
-      className: "col-sm-5"
-    });
-    row.appendChild(colseries);
+  let colseries = createElement("div", {
+    id: "colseries" + seq,
+    className: "col-sm-5"
+  });
+  row.appendChild(colseries);
 
-    let groupseries = createElement("div", {
-      id: "groupseries" + seq,
-      className: "form-group"
-    });
-    colseries.appendChild(groupseries);
+  let groupseries = createElement("div", {
+    id: "groupseries" + seq,
+    className: "form-group"
+  });
+  colseries.appendChild(groupseries);
 
-    let inputprev = createElement("input", {
-      id: `card${seq}-prevSeries`,
-      type: "text",
-      style: "display:none;"
-    });
-    colseries.appendChild(inputprev);
+  let inputprev = createElement("input", {
+    id: `card${seq}-prevSeries`,
+    type: "text",
+    style: "display:none;"
+  });
+  colseries.appendChild(inputprev);
 
-    let lblseries = createElement("b", {
-      id: "lblseries" + seq,
-      innerText: "Series"
-    });
-    groupseries.appendChild(lblseries);
+  let lblseries = createElement("b", {
+    id: "lblseries" + seq,
+    innerText: "Series"
+  });
+  groupseries.appendChild(lblseries);
 
-    let bseries = createElement("label", {
-      id: "bseries" + seq,
-      innerText: "*",
-      style: "color:red;"
-    });
-    lblseries.appendChild(bseries);
+  let bseries = createElement("label", {
+    id: "bseries" + seq,
+    innerText: "*",
+    style: "color:red;"
+  });
+  lblseries.appendChild(bseries);
 
-    let series = createElement("select", {
-      id: `card${seq}-series`,
-      className: "form-control required select2bs4",
-      style: "width: 100%;"
-    });
-    groupseries.appendChild(series);
-    series.onchange = function () {
-      enableButton(seq, this.value);
-    };
+  let series = createElement("select", {
+    id: `card${seq}-series`,
+    className: "form-control required select2bs4",
+    style: "width: 100%;"
+  });
+  groupseries.appendChild(series);
+  series.onchange = function () {
+    enableButton(seq, this.value);
+  };
 
-    //#endregion
+  //#endregion
 
   //#region delete button
   let coldelete = createElement("div", {
@@ -324,7 +327,7 @@ function createGroupSeries() {
   });
   rowbtn.appendChild(inputCount);
   //#endregion
-  
+
   //-------------------------------------- Card model ----------------------------------------
   let cardmodel = createElement("i", {
     id: `card${seq}-cardMultiItem`,
@@ -531,8 +534,6 @@ function getDefaultItemId(pool, series, model, seqSeries, id) {
     onChecked(false, seqSeries, id);
     return;
   } else {
-
-    
     const xhttp = new XMLHttpRequest();
     xhttp.open("POST", API_ITEM);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -545,13 +546,10 @@ function getDefaultItemId(pool, series, model, seqSeries, id) {
     );
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-
         const objects = JSON.parse(this.responseText);
         const itemId = document.getElementById(`card${seqSeries}-itemId` + id);
         if (objects.length > 0) {
-
           objects.map((row) => {
-
             itemId.setAttribute("value", row.ItemId);
 
             document
@@ -560,25 +558,22 @@ function getDefaultItemId(pool, series, model, seqSeries, id) {
 
             onChecked(row.Booking == 1 ? true : false, seqSeries, id);
           });
-
-        }
-        else {
+        } else {
           const dateObj = new Date();
-          const day     = dateObj.getUTCDate();
-          const month   = dateObj.getUTCMonth() + 1; // months from 1-12
-          const year    = dateObj.getUTCFullYear() + 543;// year thai พ.ศ.
+          const day = dateObj.getUTCDate();
+          const month = dateObj.getUTCMonth() + 1; // months from 1-12
+          const year = dateObj.getUTCFullYear() + 543; // year thai พ.ศ.
 
           const newDate = `${year}`;
-          const pMonth  = month.toString().padStart(2,"0");
-          
-          itemId.value = `${newDate.substring(2, 4)}${pMonth}-*****`
-		  
-		  onChecked(false, seqSeries, id);
+          const pMonth = month.toString().padStart(2, "0");
+
+          itemId.value = `${newDate.substring(2, 4)}${pMonth}-*****`;
+
+          onChecked(false, seqSeries, id);
         }
       }
     };
   }
-
 }
 
 function onSelectItemId(model, check, seqSeries) {
@@ -689,7 +684,7 @@ function onSelectItemId(model, check, seqSeries) {
       activeBooking(this.checked, i);
     };
     //#endregion
-   
+
     //#region model
 
     let colmodel = createElement("div", {
@@ -761,8 +756,8 @@ function onSelectItemId(model, check, seqSeries) {
       id: `card${seqSeries}-itemId${i}`,
       className: "form-control",
       type: "text",
-      placeholder: 'รหัสสินค้า',
-      disabled : true
+      placeholder: "รหัสสินค้า",
+      disabled: true
     });
     colItem.appendChild(itemId);
 
@@ -776,7 +771,7 @@ function onSelectItemId(model, check, seqSeries) {
     let itemName = createElement("input", {
       id: `card${seqSeries}-itemName${i}`,
       className: "form-control",
-      placeholder: 'ชื่อสินค้า',
+      placeholder: "ชื่อสินค้า",
       type: "text"
     });
     colItemName.appendChild(itemName);
@@ -899,7 +894,7 @@ function onSelectItemId(model, check, seqSeries) {
     };
 
     //#endregion
-   
+
     //#region empty
 
     let row2 = createElement("div", {
@@ -928,7 +923,7 @@ function onSelectItemId(model, check, seqSeries) {
     colempty.appendChild(groupEmpty2);
 
     //#endregion
- 
+
     //#region confirm date
 
     let colconfdate = createElement("div", {
@@ -1035,7 +1030,7 @@ function onSelectItemId(model, check, seqSeries) {
     timeperiod.add(opt3, null);
 
     //#endregion
-  
+
     //#region size
     let colsize = createElement("div", {
       id: `card${seqSeries}-colsize${i}`,
@@ -1085,6 +1080,45 @@ function onSelectItemId(model, check, seqSeries) {
     size.add(optS2, null);
     size.add(optS3, null);
     size.add(optS4, null);
+    //#endregion
+
+    //#region ไม่จอง
+    let colreserv = createElement("div", {
+      id: `card${seqSeries}-colreserv${i}`,
+      className: "col-xs-1",
+      style: "font-style: normal; text-align: center;"
+    });
+    row2.appendChild(colreserv);
+
+    let groupreserv = createElement("div", {
+      id: `card${seqSeries}-groupreserv${i}`,
+      className: "form-group",
+      style: "margin-bottom: 0;"
+    });
+    colreserv.appendChild(groupreserv);
+
+    let breserv = createElement("b", {
+      id: `card${seqSeries}-breserv${i}`,
+      innerText: "ไม่จอง"
+    });
+    groupreserv.appendChild(breserv);
+
+    let groupCheckreserv = createElement("div", {
+      id: `card${seqSeries}-groupCheckreserv${i}`,
+      className: "form-group",
+      style: "padding-top: 10px;"
+    });
+    colreserv.appendChild(groupCheckreserv);
+
+    let checkreserv = createElement("input", {
+      id: `card${seqSeries}-checkreserv${i}`,
+      className: "form-group",
+      type: "checkbox"
+    });
+    groupCheckreserv.appendChild(checkreserv);
+    // checkreserv.onclick = function () {
+    //   activeNoReserve(this.checked, i);
+    // };
     //#endregion
 
     i++;
@@ -1343,7 +1377,8 @@ function loadSeries(selected, pooledit, pool_s, seqSeries) {
       objects.map((row) => {
         if (selected == row.ProdSeries)
           trHTML += `<option value="${row.ProdSeries}" selected>${row.ProdSeries}</option>`;
-        else trHTML += `<option value="${row.ProdSeries}">${row.ProdSeries}</option>`;
+        else
+          trHTML += `<option value="${row.ProdSeries}">${row.ProdSeries}</option>`;
       });
 
       if (title == "Add Line")
@@ -1380,13 +1415,11 @@ function loadItem(selected, pool, series, model, seqSeries) {
       let _size = "";
 
       if (objects.length > 0) {
-
         objects.map((row) => {
           _ItemId = row.ItemId;
           _size = row.Size;
           _checked = row.Booking == 1 ? true : false;
         });
-
       }
       onSelectItemId(model, _checked, seqSeries);
 
@@ -1469,7 +1502,8 @@ function activeBooking(active, seqSeries, id) {
 
   setValueCheckBox(seqSeries, id, active == true ? "checked" : "");
 
-  document.getElementById(`card${seqSeries}-confirmDate_line` + id).disabled = disable;
+  document.getElementById(`card${seqSeries}-confirmDate_line` + id).disabled =
+    disable;
   if (disable) {
     document.getElementById(`card${seqSeries}-size` + id).disabled = disable;
     document.getElementById(`card${seqSeries}-timeperiod` + id).disabled =
@@ -1483,6 +1517,10 @@ function activeBooking(active, seqSeries, id) {
     .getElementById(`card${seqSeries}-confirmDate_line` + id)
     .removeAttribute("value");
   setMinConfirmDate(document.getElementById("salesDate_line").value, seqSeries);
+}
+
+function activeNoReserve(active, seqSeries, id) {
+  console.log("No reserve");
 }
 
 function activeTimePeriod(value, seqSeries, id) {
@@ -1557,7 +1595,6 @@ function loadDefaultSize(itemId, seqSeries, id) {
       objects.map((row) => {
         loadSize(row.Size, seqSeries, id);
       });
-
     }
   };
 }
@@ -1608,8 +1645,12 @@ function onChecked(checked, seqSeries, id) {
     element.setAttribute("value", checked);
     //element.value = checked;
     seq = id; // parseInt(document.getElementById(`card${seqSeries}-countItem`).value);
-    const confirmdate = document.getElementById(`card${seqSeries}-confirmDate_line` + seq);
-    const timeperiod = document.getElementById(`card${seqSeries}-timeperiod` + seq);
+    const confirmdate = document.getElementById(
+      `card${seqSeries}-confirmDate_line` + seq
+    );
+    const timeperiod = document.getElementById(
+      `card${seqSeries}-timeperiod` + seq
+    );
     const size = document.getElementById(`card${seqSeries}-size` + seq);
     const itemId = document.getElementById(`card${seqSeries}-itemId` + seq);
 
@@ -1752,7 +1793,11 @@ function create_line() {
         ),
         TimePeriod: document.getElementById(`card${j}-timeperiod` + i).value,
         CreateBy: username,
-        IsBooking: 1 //สร้างรายการจอง RG
+        IsBooking: 1, //สร้างรายการจอง RG
+        NoReserve:
+          document.getElementById(`card${j}-checkreserv${i}`).checked == true
+            ? 1
+            : 0
       });
     });
   });
@@ -1811,7 +1856,10 @@ function create_line() {
       if (result.isConfirmed) {
         const xhttp = new XMLHttpRequest();
         xhttp.open("POST", API_CREATE_LINE);
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.setRequestHeader(
+          "Content-Type",
+          "application/json;charset=UTF-8"
+        );
         xhttp.send(JSON.stringify(rowsData));
 
         xhttp.onreadystatechange = function () {
@@ -1913,6 +1961,7 @@ function edit_line() {
 }
 
 function excecuteEditLine(status) {
+  console.log(document.getElementById("checkReserve0").checked);
   const xhttp = new XMLHttpRequest();
   xhttp.open("POST", API_EDIT_LINE);
   xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -1936,7 +1985,9 @@ function excecuteEditLine(status) {
       TimePeriod: document.getElementById("timeperiod").value,
       BookingId: document.getElementById("bookingId").value,
       CreateBy: username,
-      IsBooking: status
+      IsBooking: status,
+      NoReserve:
+        document.getElementById("checkReserve0").checked == true ? 1 : 0
     })
   );
   xhttp.onreadystatechange = function () {

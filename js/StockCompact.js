@@ -13,7 +13,9 @@
 // let API_STOCK_ORDERED = SERVER_Avail + "api/stock/click/compact/ordered";
 
 let SERVER_SC_order = 'https://starmark.work/OrderOnline_API_Orders/'; //Live
-let SERVER_SC_Stock = 'https://starmark.work/OrderOnline_API_Stock/'; //Live
+//let SERVER_SC_Stock = 'https://starmark.work/OrderOnline_API_Stock/'; //Live
+
+let SERVER_SC_Stock = 'http://localhost:31810/';
 
 // let SERVER_SC_order = 'http://starmark.work/OrderOnline_API_Order_test/';
 // let SERVER_SC_Stock = 'http://starmark.work/OrderOnline_API_Stock_test/';

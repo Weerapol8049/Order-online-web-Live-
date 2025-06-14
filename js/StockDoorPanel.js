@@ -19,10 +19,11 @@
 // let API_STOCK_ORDERED = SERVER_S + "api/stock/doorpanel/ordered";
 
 let SERVER_DR_order = 'https://starmark.work/OrderOnline_API_Orders/';//Live
-let SERVER_DR_Stock = 'https://starmark.work/OrderOnline_API_Stock/';//Live
+//let SERVER_DR_Stock = 'https://starmark.work/OrderOnline_API_Stock/';//Live
 
 // let SERVER_DR_order = 'http://starmark.work/OrderOnline_API_Order_test/';
-// let SERVER_DR_Stock = 'http://starmark.work/OrderOnline_API_Stock_test/';
+ let SERVER_DR_Stock = 'http://starmark.work/OrderOnline_API_Stock_test/';
+//let SERVER_DR_Stock = 'http://localhost:31810/';
 
 let API_STOCK_SERIES = SERVER_DR_order + "api/line/series";
 let API_STOCK_MODEL = SERVER_DR_order + "api/line/model";
